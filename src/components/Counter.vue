@@ -5,8 +5,8 @@
   <p>{{ counter }}<sup>2</sup> = {{ RaizCuadradaMethod() }}</p>
   <p data-testId="counter">{{ counter }}</p>
   <div class="button-con">
-    <button @click="IncreaseCounter">+1</button>
-    <button @click="DecreaseCounter">-1</button>
+    <button data-testId="counterBtnInc" @click="IncreaseCounter">+1</button>
+    <button data-testId="counterBtnDec" @click="DecreaseCounter">-1</button>
   </div>
   <!-- el @ reemplaza el v:on -->
   <!-- <h3>Raíz cuadrada usando Computed</h3>
@@ -36,7 +36,6 @@ export default {
   //Methods : se utilizan cuando se necesiten cambiar/alterar los datos, entonces la funcion se ejecutará cada vez que se recargue la página
   methods: {
     RaizCuadradaMethod() {
-      console.log("RaizCuadradaMethod");
       return this.counter * this.counter;
     },
     IncreaseCounter() {
