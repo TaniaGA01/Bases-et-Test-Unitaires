@@ -1,14 +1,16 @@
 <template>
-  <Indecision/>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <Counter />
+  <Counter :start="3" title="Comienza en 3 gracias a :start en el App.vue"></Counter>
 </template>
 
 <script>
-import Indecision from './components/Indecision.vue'
+import Counter from './components/Counter.vue'
 
 export default {
   name: 'App',
   components: {
-    Indecision
+    Counter 
   }
 }
 </script>

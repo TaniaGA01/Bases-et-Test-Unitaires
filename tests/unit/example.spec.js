@@ -1,12 +1,13 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+describe('Example Component', () => {
+    test('le test doit être > à 10', () => {
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
+        //Arranger
+        let value = 12;
+
+        //Estimule
+        value = value + 2
+
+        //Regarder le reésultat
+        expect( value ).toBeGreaterThan(10) // documentation Jest https://jestjs.io/es-ES/docs/expect
     })
-    expect(wrapper.text()).toMatch(msg)
-  })
 })
