@@ -15,8 +15,6 @@ describe('Counter Component', () => {
     // TEST 1 : SnapShot, une copie du composant sera créée dans un fichier __snapshot__
     test('Avoir match avec le snapshot', () => {
 
-        const wrapper = shallowMount( Counter )
-
         expect(wrapper.html()).toMatchSnapshot()
 
     })

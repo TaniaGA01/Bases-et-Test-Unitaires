@@ -1,93 +1,106 @@
 <template>
-<img v-if="img" :src="img"> <!-- los dos puntos reemplazan v-bind -->
-<div class="bg-dark"></div>
-<div class="indecision-container">
-    <input 
-    type="text" 
-    placeholder="Hazme une pregunta"
-    v-model="newQuestion"
-    >
+  <img v-if="img" :src="img" />
+  <!-- los dos puntos reemplazan v-bind -->
+  <div class="bg-dark"></div>
+  <div class="indecision-container">
+    <input type="text" placeholder="Hazme une pregunta" v-model="newQuestion" />
     <p>Recuerda terminar con un punto de interrogación (?)</p>
     <div v-if="isValideQuestion">
-        <h2>{{ newQuestion }}</h2>
-        <h1 >{{ answer === 'yes' ? 'Si!!' : 'Lo siento, pero no' }}</h1>
+      <h2>{{ newQuestion }}</h2>
+      <h1>{{ answer }}</h1>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return{
-            newQuestion: null,
-            answer: null, // este answer como tal viene del API https://yesno.wtf/api
-            img: null,
-            isValideQuestion: false
-        }
-    },
-    methods:{
-        async getAnswer(){
-            this.answer = 'Pensando...'
+  data() {
+    return {
+      newQuestion: null,
+      answer: null, // este answer como tal viene del API https://yesno.wtf/api
+      img: null,
+      isValideQuestion: false,
+    };
+  },
+  methods: {
+    async getAnswer() {
 
-            const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() )
-            this.answer = answer // la primera answer es el return de data la segunda es la const
-            this.img = image // la primera img es el return de data la segunda image es la const
-        }
+      try {
+
+        this.answer = "Attendez...";
+        const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() )
+
+        this.answer = answer === 'yes' ? 'Oui !' : 'Non !'// la primera answer es el return de data la segunda es la const
+        this.img = image // la primera img es el return de data la segunda image es la const
+        
+      } catch (error) {
+
+        console.log('Indecision Component:', error)
+        this.answer = 'Impossible de charger de l\'API'
+        this.img = null
+
+      }
     },
-    watch: {
-        newQuestion(value){
-            this.isValideQuestion = false
-            if (!value.includes('?') ) return
-            this.getAnswer()
-            this.isValideQuestion = true 
-        }
-    }
-}
+  },
+  watch: {
+    newQuestion(value) {
+      this.isValideQuestion = false;
+      console.log({ value });
+      if (!value.includes("?")) return;
+      console.log({ value });
+      this.getAnswer();
+
+      this.isValideQuestion = true;
+    },
+  },
+};
 </script>
 
-<style scoped> /* Scoped : css dedicado únicamente a este componente */
+<style scoped>
+/* Scoped : css dedicado únicamente a este componente */
 
-    img, .bg-dark {
-        height: 100vh;
-        left: 0px;
-        max-height: 100%;
-        max-width: 100%;
-        position: fixed;
-        top: 0px;
-        width: 100vw;
-    }
+img,
+.bg-dark {
+  height: 100vh;
+  left: 0px;
+  max-height: 100%;
+  max-width: 100%;
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+}
 
-    .bg-dark {
-        background-color: rgba(0, 0, 0, 0.4);
-    }
+.bg-dark {
+  background-color: rgba(0, 0, 0, 0.4);
+}
 
-    .indecision-container {
-        position: relative;
-        z-index: 99;
-    }
-    
-    input {
-        width: 250px;
-        padding: 10px 15px;
-        border-radius: 5px;
-        border: none;
-    }
-    input:focus {
-        outline: none;
-    }
+.indecision-container {
+  position: relative;
+  z-index: 99;
+}
 
-    p {
-        color: white;
-        font-size: 20px;
-        margin-top: 0px;
-    }
+input {
+  width: 250px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+}
+input:focus {
+  outline: none;
+}
 
-    h1, h2 {
-        color: white;
-    }
-    
-    h2 {
-        margin-top: 150px;
-    }
+p {
+  color: white;
+  font-size: 20px;
+  margin-top: 0px;
+}
 
+h1,
+h2 {
+  color: white;
+}
+
+h2 {
+  margin-top: 150px;
+}
 </style>
